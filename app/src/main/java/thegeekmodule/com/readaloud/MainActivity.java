@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
     EditText mResultEt;
     ImageView mPreviewIv;
+    Button mReadOutLoud;
 
     private static final int CAMERA_REQUEST_CODE = 200;
     private static final int STORAGE_REQUEST_CODE = 400;
@@ -67,17 +68,30 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setSubtitle("Click + button to insert image");
+        actionBar.setSubtitle("Click image button to insert image");
 
         mResultEt = (EditText)findViewById(R.id.resultEt);
         mPreviewIv = (ImageView)findViewById(R.id.imageIv);
+        mReadOutLoud = (Button)findViewById(R.id.ReadOutLoud);
 
         //camera permission and storage permission
         cameraPermission = new String[]{Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE};
         storagePermission = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
-//        Intent i = new Intent(getApplicationContext(),SpeakActivity.class);
-//        startActivity(i);
+        //TODO
+        //If conditions not working
+        mReadOutLoud.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!mResultEt.getText().equals("") || mResultEt.getText()!=null) {
+                    Intent i = new Intent(getApplicationContext(), SpeakActivity.class);
+                    startActivity(i);
+                }else{
+                    Toast.makeText(getApplicationContext(),"Nothing to Speak",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
     }
 
 
