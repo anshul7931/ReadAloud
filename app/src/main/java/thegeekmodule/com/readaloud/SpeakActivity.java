@@ -1,5 +1,6 @@
 package thegeekmodule.com.readaloud;
 
+import android.app.Activity;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,7 +17,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-public class SpeakActivity extends AppCompatActivity {
+public class SpeakActivity extends Activity {
 
     private TextToSpeech mTTS;
     private EditText mEditText;
