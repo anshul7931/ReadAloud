@@ -24,7 +24,8 @@
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/AppTheme" /> <!-- optional (needed if default theme has no action bar) -->
 
-        <activity android:name=".SpeakActivity"></activity>
+        <activity android:name=".SpeakActivity" />
+        <activity android:name=".CustomizationActivity" />
     </application>
 
 </manifest>

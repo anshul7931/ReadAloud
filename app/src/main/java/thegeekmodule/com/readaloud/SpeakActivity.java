@@ -21,41 +21,22 @@ public class SpeakActivity extends Activity {
 
     private TextToSpeech mTTS;
     private EditText mEditText;
-    private SeekBar mSeekBarPitch;
-    private SeekBar mSeekBarSpeed;
     private Button mButtonSpeak;
-    private Spinner mSelectLocale;
-    Map<String,Locale> localeMap = new HashMap<>();
-    //        Locale[] locales = Locale.getAvailableLocales();
-    Locale[] locales = new Locale[]{Locale.ENGLISH,Locale.GERMAN,Locale.FRENCH};
+    private String msg = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_speak);
+        msg = getIntent().getStringExtra("content");
 
         mButtonSpeak = (Button)findViewById(R.id.button_speak);
         mEditText = (EditText)findViewById(R.id.edit_text);
-        mSeekBarPitch = (SeekBar)findViewById(R.id.seek_bar_pitch);
-        mSeekBarSpeed = (SeekBar)findViewById(R.id.seek_bar_speed);
-        mSelectLocale = (Spinner)findViewById(R.id.selectLocale);
 
 
-        for(int i=0;i<locales.length;i++){
-            localeMap.put(locales[i].getDisplayLanguage(),locales[i]);
-        }
-        String[] items = new String[localeMap.size()];
-        int index =0;
-        for(Map.Entry<String,Locale> locale : localeMap.entrySet()){
-            items[index] = locale.getKey();
-            index++;
-        }
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
-        mSelectLocale.setAdapter(adapter);
-        //TODO enable visibility
-        mSelectLocale.setVisibility(View.INVISIBLE);
-
-        createTextToSpeakObject(Locale.GERMAN);
+        mEditText.setText(msg);
+        createTextToSpeakObject(Locale.US);
 
         mButtonSpeak.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,10 +49,11 @@ public class SpeakActivity extends Activity {
     private void speak() {
         //createTextToSpeakObject(localeMap.get(mSelectLocale.getSelectedItem().toString()));
         String text = mEditText.getText().toString();
-        float pitch = (float) mSeekBarPitch.getProgress() / 50;
-        if (pitch < 0.1) pitch = 0.1f;
-        float speed = (float) mSeekBarSpeed.getProgress() / 50;
-        if (speed < 0.1) speed = 0.1f;
+//        float pitch = (float) mSeekBarPitch.getProgress() / 50;
+//        if (pitch < 0.1) pitch = 0.1f;
+//        float speed = (float) mSeekBarSpeed.getProgress() / 50;
+//        if (speed < 0.1) speed = 0.1f;
+        float pitch = 0.5f,speed=0.5f;
         mTTS.setPitch(pitch);
         mTTS.setSpeechRate(speed);
         mTTS.speak(text, TextToSpeech.QUEUE_FLUSH, null);

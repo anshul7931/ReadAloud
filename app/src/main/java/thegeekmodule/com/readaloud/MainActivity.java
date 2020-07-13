@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
     String cameraPermission[];
     String storagePermission[];
 
+    String msg = "";
     Uri image_uri;
 
     @Override
@@ -84,7 +85,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(!mResultEt.getText().equals("") || mResultEt.getText()!=null) {
-                    Intent i = new Intent(getApplicationContext(), SpeakActivity.class);
+                    Intent i = new Intent(getApplicationContext(), CustomizationActivity.class);
+                    i.putExtra("content",msg);
                     startActivity(i);
                 }else{
                     Toast.makeText(getApplicationContext(),"Nothing to Speak",Toast.LENGTH_SHORT).show();
@@ -255,7 +257,8 @@ public class MainActivity extends AppCompatActivity {
                             sb.append("\n");
                         }
                         //set text to edit text
-                        mResultEt.setText(sb.toString());
+                        msg=sb.toString();
+                        mResultEt.setText(msg);
                     }
                 }else if(resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE){
                     Exception error = result.getError();
