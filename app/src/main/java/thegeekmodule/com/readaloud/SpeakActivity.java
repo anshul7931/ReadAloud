@@ -23,6 +23,8 @@ public class SpeakActivity extends Activity {
     private EditText mEditText;
     private Button mButtonSpeak;
     private String msg = "";
+    Locale[] locales = Constants.locales;
+    private int localeIndex = 0;
 
 
     @Override
@@ -30,13 +32,14 @@ public class SpeakActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_speak);
         msg = getIntent().getStringExtra("content");
+        localeIndex = getIntent().getIntExtra("localeIndex",0);
 
         mButtonSpeak = (Button)findViewById(R.id.button_speak);
         mEditText = (EditText)findViewById(R.id.edit_text);
 
 
         mEditText.setText(msg);
-        createTextToSpeakObject(Locale.US);
+        createTextToSpeakObject(locales[localeIndex]);
 
         mButtonSpeak.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,7 +56,8 @@ public class SpeakActivity extends Activity {
 //        if (pitch < 0.1) pitch = 0.1f;
 //        float speed = (float) mSeekBarSpeed.getProgress() / 50;
 //        if (speed < 0.1) speed = 0.1f;
-        float pitch = 0.5f,speed=0.5f;
+        float pitch = getIntent().getFloatExtra("seekbarPitch ",0.5f);
+        float speed=getIntent().getFloatExtra("seekbarSpeed",0.5f);
         mTTS.setPitch(pitch);
         mTTS.setSpeechRate(speed);
         mTTS.speak(text, TextToSpeech.QUEUE_FLUSH, null);

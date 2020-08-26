@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -20,7 +21,9 @@ public class CustomizationActivity extends AppCompatActivity {
 
     private Spinner mSelectLocale;
     Map<String,Locale> localeMap = new HashMap<>();
-    Locale[] locales = new Locale[]{Locale.ENGLISH,Locale.GERMAN,Locale.FRENCH};
+    Locale[] locales = Constants.locales;
+    private SeekBar mSeekbarSpeed;
+    private SeekBar mSeekbarPitch;
 
     private String msg = "";
 
@@ -30,6 +33,8 @@ public class CustomizationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_customization);
         mProceed = (Button)findViewById(R.id.proceedBtn);
         mSelectLocale = (Spinner)findViewById(R.id.selectLocale);
+        mSeekbarPitch = (SeekBar)findViewById(R.id.seek_bar_pitch);
+        mSeekbarSpeed = (SeekBar)findViewById(R.id.seek_bar_speed);
         msg = getIntent().getStringExtra("content");
 
         ActionBar actionBar = getSupportActionBar();
@@ -55,6 +60,9 @@ public class CustomizationActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), SpeakActivity.class);
                 i.putExtra("content",msg);
+                i.putExtra("localeIndex",Constants.getLocaleIndex(mSelectLocale.getSelectedItem().toString()));
+                i.putExtra("seekbarSpeed",(float) mSeekbarSpeed.getProgress() / 50);
+                i.putExtra("seekbarPitch",(float) mSeekbarPitch.getProgress() / 50);
                 startActivity(i);
             }
         });
